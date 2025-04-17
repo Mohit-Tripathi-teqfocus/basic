@@ -54,7 +54,8 @@ isort .
 ## Testing
 
 ```bash
-pytest --cov=app
+set PYTHONPATH=.
+pytest --cov=app --cov-report=term-missing
 ```
 
 To generate a coverage report, install `pytest-cov`:
