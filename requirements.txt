@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+httpx
+pytest
+python-dotenv
+pytest-asyncio
+respx
+black
+isort
+pytest-cov
