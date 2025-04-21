@@ -10,6 +10,19 @@ A simple FastAPI project that fetches cryptocurrency data using the CoinGecko AP
 - Health check and version info endpoints
 - Dockerized
 
+## 🔐 Authentication (API Key)
+
+All `/api/*` routes require an API key.
+
+Send the following header with your requests:
+
+```http
+x-api-key: supersecretkey
+```
+
+(You can change the value in your `.env` file)
+
+Public routes like `/`, `/health`, and `/version` do **not** require auth.
 
 ## Run Locally
 
@@ -23,6 +36,7 @@ Create a `.env` file:
 ```env
 COINGECKO_API_BASE=https://api.coingecko.com/api/v3
 DEFAULT_CURRENCY=cad
+API_KEY=supersecretkey
 ```
 
 API available at: `http://127.0.0.1:8000/docs`
@@ -48,7 +62,6 @@ docker-compose up --build
 
 ```bash
 black .
-isort .
 ```
 
 ## Testing

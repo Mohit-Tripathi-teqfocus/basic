@@ -1,13 +1,20 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, Depends, HTTPException
 from app.routes import coins
 from dotenv import load_dotenv
 import os
 from fastapi.responses import HTMLResponse
-from fastapi import FastAPI
 
 load_dotenv()
 
+API_KEY = os.getenv("API_KEY", "supersecretkey")
+
 app = FastAPI(title="Crypto Market API")
+
+
+def verify_api_key(request: Request):
+    key = request.headers.get("x-api-key")
+    if key != API_KEY:
+        raise HTTPException(status_code=403, detail="Invalid or missing API Key")
 
 
 @app.get("/health")
@@ -31,4 +38,4 @@ def read_root():
         return f.read()
 
 
-app.include_router(coins.router, prefix="/api")
+app.include_router(coins.router, prefix="/api", dependencies=[Depends(verify_api_key)])

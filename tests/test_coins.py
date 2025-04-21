@@ -11,21 +11,21 @@ client = TestClient(app)
 
 def test_list_coins():
     """Test if /coins endpoint returns a valid list of coins."""
-    response = client.get("/api/coins")
+    response = client.get("/api/coins", headers={"x-api-key": "supersecretkey"})
     assert response.status_code == 200
     assert isinstance(response.json(), list)
 
 
 def test_list_categories():
     """Test if /categories endpoint returns a valid list of categories."""
-    response = client.get("/api/categories")
+    response = client.get("/api/categories", headers={"x-api-key": "supersecretkey"})
     assert response.status_code == 200
     assert isinstance(response.json(), list)
 
 
 def test_filtered_coins_by_ids():
     """Test filtering coins using a specific coin ID."""
-    response = client.get("/api/filtered-coins?ids=bitcoin")
+    response = client.get("/api/filtered-coins?ids=bitcoin", headers={"x-api-key": "supersecretkey"})
     print("\nRESPONSE JSON:", response.json())
     assert response.status_code == 200
     data = response.json()
@@ -35,14 +35,14 @@ def test_filtered_coins_by_ids():
 
 def test_filtered_coins_by_category():
     """Test filtering coins using a specific category."""
-    response = client.get("/api/filtered-coins?category=stablecoins")
+    response = client.get("/api/filtered-coins?category=stablecoins", headers={"x-api-key": "supersecretkey"})
     assert response.status_code == 200
     assert isinstance(response.json(), list)
 
 
 def test_filtered_coins_pagination():
     """Test pagination on filtered coins endpoint."""
-    response = client.get("/api/filtered-coins?page_num=1&per_page=5")
+    response = client.get("/api/filtered-coins?page_num=1&per_page=5", headers={"x-api-key": "supersecretkey"})
     print("\nPAGINATED RESPONSE:", response.json())
     assert response.status_code == 200
     data = response.json()
@@ -80,14 +80,14 @@ async def test_get_all_coins_function():
 
 def test_health_check():
     """Test the /health endpoint."""
-    response = client.get("/health")
+    response = client.get("/health", headers={"x-api-key": "supersecretkey"})
     assert response.status_code == 200
     assert response.json() == {"status": "ok"}
 
 
 def test_version_info():
     """Test the /version endpoint."""
-    response = client.get("/version")
+    response = client.get("/version", headers={"x-api-key": "supersecretkey"})
     assert response.status_code == 200
     assert "app_version" in response.json()
     assert "coingecko_api" in response.json()
